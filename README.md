@@ -2,13 +2,13 @@
 
 run the command:
 
-To Backup.  
+To Backup    
 **node backup (name_of_collection)**
 
-To Restore. 
+To Restore    
 **node restore (name_of_collection)**
 
-**collections available:**
+***collections available:***
 - death
 - death_archive
 - donation
@@ -20,7 +20,7 @@ To Restore.
 - schedule
 - schedule_archive
 
-note: to backup or restore all, pass "all".
+*note:* to backup or restore all, pass "all".
 
-Example:<br/>
+*Example:<br/>*
 **node backup all** or **node restore all**
