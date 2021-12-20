@@ -1,19 +1,18 @@
-const { initializeApp, backups, backup } = require("firestore-export-import");
+const { initializeApp, backup } = require("firestore-export-import");
+const { serviceAccount, collections } = require("./config");
 const fs = require("fs");
 
-initializeApp(
-  require("./church-backend-dbf84-firebase-adminsdk-elg3i-956b61e243.json")
-);
+initializeApp(serviceAccount);
 
-process.argv.slice(2).forEach(function (arg, index, array) {
-  if (arg === "all") {
-    backupAll();
-  } else {
-    backupOne(arg);
-  }
-});
+if (process.argv.includes("all")) {
+  collections.forEach((arg) => backupCollection(arg));
+} else {
+  process.argv.slice(2).forEach((arg) => {
+    backupCollection(arg);
+  });
+}
 
-function backupOne(collection) {
+function backupCollection(collection) {
   backup(collection).then(async (data) => {
     fs.writeFile(
       `./backup/${collection}.json`,
@@ -22,33 +21,8 @@ function backupOne(collection) {
         if (err) {
           return console.log(err);
         }
-        console.log("The file was saved!");
+        console.log(`The backup for ${collection} was saved!`);
       }
     );
-  });
-}
-
-function backupAll() {
-  let collections = [
-    "death",
-    "death_archive",
-    "donation",
-    "events",
-    "marriage",
-    "marriage_archive",
-    "requests",
-    "requests_archive",
-    "schedule",
-    "schedule_archive",
-  ];
-
-  backups(collections).then(async (data) => {
-    fs.writeFile("./backup/all.json", JSON.stringify(data), function (err) {
-      if (err) {
-        console.log("backup failed");
-        return console.log(err);
-      }
-      console.log("The file was saved!");
-    });
   });
 }
