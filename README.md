@@ -3,10 +3,10 @@
 run the command:
 
 To Backup.  
-**node backup.js (name_of_collection)**
+**node backup (name_of_collection)**
 
 To Restore. 
-**node restore.js (name_of_collection)**
+**node restore (name_of_collection)**
 
 **collections available:**
 - death
@@ -23,4 +23,4 @@ To Restore.
 note: to backup or restore all, pass "all".
 
 Example:<br/>
-**node backup.js all** or **node restore.js all**
+**node backup all** or **node restore all**
