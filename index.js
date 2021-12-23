@@ -3,21 +3,38 @@ const { backupAll } = require("./backup");
 const { restoreAll } = require("./restore");
 
 const hostname = "localhost";
-const port = 3000;
+const port = 8080;
 
 const server = http.createServer(async (req, res) => {
-  let success = false;
-  if (req.url === "/backupAll") {
-    success = await backupAll();
-  }
+  if (req.method === "OPTIONS") {
+    res.writeHead(200, {
+      "Access-Control-Allow-Headers": "Content-Type, Accept",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*",
+    });
+    res.end();
+  } else {
+    let success = false;
+    if (req.url === "/backupAll") {
+      console.log("got backup request\n");
+      success = await backupAll();
+    }
 
-  if (req.url === "/restoreAll") {
-    success = await restoreAll();
-  }
+    if (req.url === "/restoreAll") {
+      console.log("got restore request\n");
+      success = await restoreAll();
+    }
 
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "application/json");
-  res.end(JSON.stringify({ success: success }));
+    console.log("\nDone\n");
+
+    const headers = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET",
+    };
+    res.writeHead(200, headers);
+    res.end(JSON.stringify({ success: success }));
+  }
 });
 
 server.listen(port, hostname, () => {

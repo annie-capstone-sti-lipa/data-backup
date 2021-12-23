@@ -3,7 +3,7 @@ const { serviceAccount, collections } = require("./config");
 
 initializeApp(serviceAccount);
 
-console.log("restore process started:\n");
+console.log("restore script initiated:\n");
 
 if (process.argv.includes("all")) {
   collections.forEach((arg) => restoreCollection(arg));

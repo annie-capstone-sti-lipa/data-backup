@@ -5,7 +5,7 @@ const { resolve } = require("path");
 
 initializeApp(serviceAccount);
 
-console.log("backup process started:\n");
+console.log("backup script initiated:\n");
 
 if (process.argv.includes("all")) {
   collections.forEach((arg) => backupCollection(arg));
