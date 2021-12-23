@@ -1,6 +1,6 @@
 const http = require("http");
-const { execSync } = require("child_process");
 const { backupAll } = require("./backup");
+const { restoreAll } = require("./restore");
 
 const hostname = "localhost";
 const port = 3000;
@@ -12,7 +12,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.url === "/restoreAll") {
-    execSync("node backup all");
+    success = await restoreAll();
   }
 
   res.statusCode = 200;

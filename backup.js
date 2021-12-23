@@ -26,7 +26,6 @@ async function backupCollection(collection) {
             resolve(false);
             return console.log(err);
           }
-          // console.log(`The backup for ${collection} was saved!`);
           resolve(true);
         }
       );
@@ -38,24 +37,11 @@ module.exports.backupAll = async () => {
   return await new Promise(async (resolve) => {
     let success = true;
     for (const collection of collections) {
-      console.log("backing up " + collection);
       success = await backupCollection(collection);
-      console.log(success);
-      console.log("backed up " + collection);
+      if (success) {
+        console.log("backed up " + collection);
+      }
     }
     resolve(success);
-
-    // collections.forEach(async (arg, index) => {
-    //   console.log("backing up " + arg);
-    //   await new Promise(async (resolve) => {
-    //     await backupCollection(arg);
-    //     console.log("backed up " + arg);
-    //     resolve();
-    //   });
-    //   if (index === collections.length - 1) {
-    //     console.log("resolved");
-    //     resolve(true);
-    //   }
-    // });
   });
 };

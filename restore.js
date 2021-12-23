@@ -13,8 +13,23 @@ if (process.argv.includes("all")) {
   });
 }
 
-function restoreCollection(collection) {
-  restore(`./backup/${collection}.json`).then((data) => {
-    console.log(`${collection} ${data.message}`);
+async function restoreCollection(collection) {
+  return await new Promise((resolve) => {
+    restore(`./backup/${collection}.json`).then((data) => {
+      resolve(data.status);
+    });
   });
 }
+
+module.exports.restoreAll = async () => {
+  return await new Promise(async (resolve) => {
+    let success = true;
+    for (const collection of collections) {
+      success = await restoreCollection(collection);
+      if (success) {
+        console.log("restored " + collection);
+      }
+    }
+    resolve(success);
+  });
+};
