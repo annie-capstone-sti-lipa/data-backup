@@ -1,14 +1,9 @@
-module.exports.serviceAccount = require("./church-backend-dbf84-firebase-adminsdk-elg3i-956b61e243.json");
+module.exports.serviceAccount = require("./annie-b11fd-firebase-adminsdk-4h23h-9ee2e47589.json");
 
 module.exports.collections = [
-  "death",
-  "death_archive",
-  "donation",
-  "events",
-  "marriage",
-  "marriage_archive",
-  "requests",
-  "requests_archive",
-  "schedule",
-  "schedule_archive",
+  "mal-user-token",
+  "schedules",
+  "users-discord",
+  "users-info",
+  "users-quiz",
 ];

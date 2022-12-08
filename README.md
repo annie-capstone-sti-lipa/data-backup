@@ -2,25 +2,21 @@
 
 run the command:
 
-To Backup    
+To Backup  
 **node backup (name_of_collection)**
 
-To Restore    
+To Restore  
 **node restore (name_of_collection)**
 
-***collections available:***
-- death
-- death_archive
-- donation
-- events
-- marriage
-- marriage_archive
-- requests
-- requests_archive
-- schedule
-- schedule_archive
+**_collections available:_**
 
-*note:* to backup or restore all, pass "all".
+- mal-user-token
+- schedules
+- users-discord
+- users-info
+- users-quiz
 
-*Example:<br/>*
+_note:_ to backup or restore all, pass "all".
+
+_Example:<br/>_
 **node backup all** or **node restore all**
