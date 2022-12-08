@@ -1,5 +1,6 @@
 const { initializeApp, restore } = require("firestore-export-import");
 const { serviceAccount, collections } = require("./config");
+const fs = require("fs");
 
 initializeApp(serviceAccount);
 
@@ -15,20 +16,33 @@ if (process.argv.includes("all")) {
 
 async function restoreCollection(collection) {
   return await new Promise((resolve) => {
-    restore(`./backup/${collection}.json`).then((data) => {
-      resolve(data.status);
+    fs.open(`./backup/${collection}.json`, "r", (err, fd) => {
+      if (!err && fd) {
+        restore(`./backup/${collection}.json`).then((data) => {
+          let message = `${collection} has been restored.`;
+          console.log(message);
+          resolve(message);
+        });
+      } else {
+        let message = `backup file for ${collection} does not exist, the restore process failed.`;
+        console.log(message);
+        resolve(message);
+      }
     });
   });
 }
 
+module.exports.restoreOne = async (collection) => {
+  return await new Promise(async (resolve) => {
+    resolve(await restoreCollection(collection));
+  });
+};
+
 module.exports.restoreAll = async () => {
   return await new Promise(async (resolve) => {
-    let success = true;
+    let success = "restore process completed.";
     for (const collection of collections) {
       success = await restoreCollection(collection);
-      if (success) {
-        console.log("restored " + collection);
-      }
     }
     resolve(success);
   });

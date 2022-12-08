@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node annie-admin.js"
+    "start": "echo 'run either the webserver, the bot or the indiviual files.'",
+    "bot": "node annie-admin.js",
+    "web": "node web_endpoints.js"
   },
   "keywords": [],
   "author": "",
