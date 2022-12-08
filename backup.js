@@ -26,6 +26,7 @@ async function backupCollection(collection) {
             resolve(false);
             return console.log(err);
           }
+          console.log("backed up: " + collection);
           resolve(true);
         }
       );
@@ -39,7 +40,7 @@ module.exports.backupAll = async () => {
     for (const collection of collections) {
       success = await backupCollection(collection);
       if (success) {
-        console.log("backed up " + collection);
+        console.log("backed up: " + collection);
       }
     }
     resolve(success);
