@@ -7,6 +7,7 @@ const {
   REST,
   Routes,
 } = require("discord.js");
+const { exec } = require("node:child_process");
 
 const fs = require("node:fs");
 const path = require("node:path");
@@ -101,5 +102,19 @@ const rest = new REST({ version: "10" }).setToken(token);
     console.error(error);
   }
 })();
+
+exec("npm run web", (error, stdout, stderr) => {
+  if (error) {
+    console.error(`error: ${error.message}`);
+    return;
+  }
+
+  if (stderr) {
+    console.error(`stderr: ${stderr}`);
+    return;
+  }
+
+  console.log(`stdout:\n${stdout}`);
+});
 
 client.login(token);

@@ -14,6 +14,16 @@ const server = http.createServer(async (req, res) => {
     });
     res.end();
   } else {
+    if (req.url === "/") {
+      const headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+      };
+      res.writeHead(200, headers);
+      res.end("BACKUP AND RESTORE SERVER FOR ANNIE");
+      return;
+    }
+
     let success = false;
     if (req.url === "/backupAll") {
       console.log("got backup request\n");
