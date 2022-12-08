@@ -5,5 +5,5 @@ module.exports.collections = [
   "schedules",
   "users-discord",
   "users-info",
-  "users-quiz",
+  // "users-quiz",
 ];

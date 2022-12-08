@@ -34,6 +34,12 @@ async function backupCollection(collection) {
   });
 }
 
+module.exports.backupOne = async (collection) => {
+  return await new Promise(async (resolve) => {
+    resolve(await backupCollection(collection));
+  });
+};
+
 module.exports.backupAll = async () => {
   return await new Promise(async (resolve) => {
     let success = true;
