@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const client = require("../annie-admin");
 const { backupOne } = require("../backup");
 const { collections } = require("../config");
 
