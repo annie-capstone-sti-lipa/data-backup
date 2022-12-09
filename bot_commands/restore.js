@@ -36,7 +36,7 @@ module.exports = {
     } else {
       for (const collection of collections) {
         await runBackup(collection, interaction);
-        interaction.channel.sendTyping();
+        if (!interaction.inGuild()) interaction.channel.sendTyping();
       }
       await interaction.followUp("Restore process completed!");
     }
