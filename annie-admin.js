@@ -56,6 +56,10 @@ client.on("ready", async () => {
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
+  // if (interaction.author.id) {
+  console.log(interaction.author.id);
+  // }
+
   const command = client.commands.get(interaction.commandName);
 
   if (!command) return;
