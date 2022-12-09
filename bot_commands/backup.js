@@ -30,10 +30,6 @@ module.exports = {
         }
       });
     }
-    // console.log(interaction.inGuild());
-    // console.log(interaction.channelId);
-    // console.log(typeof interaction);
-    // return;
 
     await interaction.deferReply();
 
