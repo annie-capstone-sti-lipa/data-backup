@@ -40,25 +40,35 @@ for (const file of commandFiles) {
   }
 }
 
-function sendReply(message, reply) {
-  let isDM = message.channel instanceof DMChannel;
-  if (isDM) {
-    message.author.send(reply);
-  } else {
-    message.channel.send(reply);
-  }
-}
-
 client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
+  async function isAdmin(userId) {
+    return (
+      await fetch(
+        `https://annie-api.azurewebsites.net/get-sudoers?discordId=${userId}`
+      )
+        .then(async (response) => await response.json())
+        .then((sudoers) => {
+          console.log(sudoers);
+          return sudoers;
+        })
+    ).includes(userId);
+  }
+
   if (!interaction.isChatInputCommand()) return;
 
-  // if (interaction.author.id) {
-  console.log(interaction.author.id);
-  // }
+  await interaction.deferReply();
+
+  if (!(await isAdmin(interaction.user.id))) {
+    await interaction.followUp({
+      content: "Sorry you don't have permissions to perform that action.",
+      ephemeral: true,
+    });
+    return;
+  }
 
   const command = client.commands.get(interaction.commandName);
 
@@ -68,7 +78,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({
+    await interaction.followUp({
       content: "There was an error while executing this command!",
       ephemeral: true,
     });

@@ -21,14 +21,12 @@ module.exports = {
 
   async execute(interaction) {
     async function runBackup(_collectionName, inte) {
-      await inte.followUp(`restoring ${_collectionName}.`);
+      await inte.followUp(`restoring ${_collectionName}...`);
       if (!inte.inGuild()) inte.channel.sendTyping();
       await restoreOne(_collectionName).then(async (response) => {
         await inte.followUp(response);
       });
     }
-
-    await interaction.deferReply();
 
     let collectionName = interaction.options.getString("collection_name");
 

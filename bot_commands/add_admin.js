@@ -14,8 +14,6 @@ module.exports = {
     }),
 
   async execute(interaction) {
-    await interaction.deferReply();
-
     let user = interaction.options.getUser("user");
 
     await fetch("https://annie-api.azurewebsites.net/add-sudoer?", {

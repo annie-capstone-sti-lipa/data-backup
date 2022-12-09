@@ -21,7 +21,7 @@ module.exports = {
 
   async execute(interaction) {
     async function runBackup(_collectionName, inte) {
-      await inte.followUp(`backing up ${_collectionName}.`);
+      await inte.followUp(`backing up ${_collectionName}...`);
       if (!inte.inGuild()) inte.channel.sendTyping();
       await backupOne(_collectionName).then(async (success) => {
         if (success) {
@@ -31,8 +31,6 @@ module.exports = {
         }
       });
     }
-
-    await interaction.deferReply();
 
     let collectionName = interaction.options.getString("collection_name");
 
