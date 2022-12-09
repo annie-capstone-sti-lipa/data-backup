@@ -7,11 +7,9 @@ const {
   REST,
   Routes,
 } = require("discord.js");
-const { exec } = require("node:child_process");
 
 const fs = require("node:fs");
 const path = require("node:path");
-const { fileURLToPath } = require("url");
 
 require("dotenv").config();
 const token = process.env.DISCORD_TOKEN;
@@ -53,10 +51,6 @@ function sendReply(message, reply) {
 
 client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on("messageCreate", (message) => {
-  let isDM = message.channel instanceof DMChannel;
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
@@ -102,19 +96,5 @@ const rest = new REST({ version: "10" }).setToken(token);
     console.error(error);
   }
 })();
-
-exec("npm run web", (error, stdout, stderr) => {
-  if (error) {
-    console.error(`error: ${error.message}`);
-    return;
-  }
-
-  if (stderr) {
-    console.error(`stderr: ${stderr}`);
-    return;
-  }
-
-  console.log(`stdout:\n${stdout}`);
-});
 
 client.login(token);

@@ -17,20 +17,22 @@ if (process.argv.includes("all")) {
 
 async function backupCollection(collection) {
   return await new Promise((resolve) => {
-    backup(collection).then(async (data) => {
-      fs.writeFile(
-        `./backup/${collection}.json`,
-        JSON.stringify(data),
-        function (err) {
-          if (err) {
-            resolve(false);
-            return console.log(err);
+    backup(collection)
+      .then(async (data) => {
+        fs.writeFile(
+          `./backup/${collection}.json`,
+          JSON.stringify(data),
+          function (err) {
+            if (err) {
+              resolve(false);
+              return console.log(err);
+            }
+            console.log("backed up: " + collection);
+            resolve(true);
           }
-          console.log("backed up: " + collection);
-          resolve(true);
-        }
-      );
-    });
+        );
+      })
+      .catch((e) => console.log(e));
   });
 }
 

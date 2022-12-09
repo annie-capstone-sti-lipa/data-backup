@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const client = require("../annie-admin");
 const { backupOne } = require("../backup");
 const { collections } = require("../config");
 
@@ -29,6 +30,10 @@ module.exports = {
         }
       });
     }
+    // console.log(interaction.inGuild());
+    // console.log(interaction.channelId);
+    // console.log(typeof interaction);
+    // return;
 
     await interaction.deferReply();
 
@@ -39,7 +44,7 @@ module.exports = {
     } else {
       for (const collection of collections) {
         await runBackup(collection, interaction);
-        interaction.channel.sendTyping();
+        if (!interaction.inGuild()) interaction.channel.sendTyping();
       }
       await interaction.followUp("Backup process completed!");
     }
