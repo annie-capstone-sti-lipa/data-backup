@@ -22,6 +22,8 @@ module.exports = {
 
   async execute(interaction) {
     async function runBackup(_collectionName, inte) {
+      await inte.followUp(`backing up ${_collectionName}.`);
+      if (!inte.inGuild()) inte.channel.sendTyping();
       await backupOne(_collectionName).then(async (success) => {
         if (success) {
           await inte.followUp(`${_collectionName} has been backed up!`);
@@ -40,7 +42,6 @@ module.exports = {
     } else {
       for (const collection of collections) {
         await runBackup(collection, interaction);
-        if (!interaction.inGuild()) interaction.channel.sendTyping();
       }
       await interaction.followUp("Backup process completed!");
     }

@@ -22,6 +22,8 @@ module.exports = {
 
   async execute(interaction) {
     async function runBackup(_collectionName, inte) {
+      await inte.followUp(`restoring ${_collectionName}.`);
+      if (!inte.inGuild()) inte.channel.sendTyping();
       await restoreOne(_collectionName).then(async (response) => {
         await inte.followUp(response);
       });
@@ -36,7 +38,6 @@ module.exports = {
     } else {
       for (const collection of collections) {
         await runBackup(collection, interaction);
-        if (!interaction.inGuild()) interaction.channel.sendTyping();
       }
       await interaction.followUp("Restore process completed!");
     }
