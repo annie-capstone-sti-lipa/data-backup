@@ -1,13 +1,13 @@
 const {
   Client,
   Partials,
-  DMChannel,
   Events,
   Collection,
   REST,
   Routes,
 } = require("discord.js");
 
+const Helper = require("./helper");
 const fs = require("node:fs");
 const path = require("node:path");
 
@@ -45,24 +45,11 @@ client.on("ready", async () => {
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
-  async function isAdmin(userId) {
-    return (
-      await fetch(
-        `https://annie-api.azurewebsites.net/get-sudoers?discordId=${userId}`
-      )
-        .then(async (response) => await response.json())
-        .then((sudoers) => {
-          console.log(sudoers);
-          return sudoers;
-        })
-    ).includes(userId);
-  }
-
   if (!interaction.isChatInputCommand()) return;
 
   await interaction.deferReply();
 
-  if (!(await isAdmin(interaction.user.id))) {
+  if (!(await Helper.isAdmin(interaction.user.id))) {
     await interaction.followUp({
       content: "Sorry you don't have permissions to perform that action.",
       ephemeral: true,
